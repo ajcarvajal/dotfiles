@@ -51,14 +51,7 @@ if has('syntax') && has('eval')
   packadd! matchit
 endif
 
-execute pathogen#infect()
-syntax on
-filetype plugin indent on
-
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-
 colorscheme photon
+
+" enable line count
+set number
