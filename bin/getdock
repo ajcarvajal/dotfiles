@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Aj Carvajal	Apr 2019
+# GPLv3
+# Returns the container ID for the specified Docker Container
+# Can search by Image Name or index 
+
+# Example- stopping a docker container 
+# by name:
+#	docker stop $(getdock MyImage)
+# or by index:
+#	docker stop $(getdock 1)
+
+docker container ls |		 
+       awk -v box="$1" '
+	BEGIN {
+		isnum = (typeof(box)=="strnum")
+		if(isnum && box==0) box++
+	}
+
+	(!isnum && $2 == box)  {
+		print $1
+	}
+
+	(isnum && NR == box+1) {
+		print $1
+	}'
+
+	
+	
