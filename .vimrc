@@ -45,7 +45,15 @@ colorscheme photon
 " enable line count
 set number
 
+" indentation settings
 filetype plugin on
 set autoindent
 
+"for compton exceptions
 set title 
+
+" tab width
+set tabstop=4
+set shiftwidth=4
+" change tabs to insert spaces
+set expandtab
