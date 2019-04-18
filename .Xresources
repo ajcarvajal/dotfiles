@@ -1,11 +1,12 @@
-#URxvt*background: Black
-#URxvt*foreground: #fffd00
-URxvt.font: xft:monaco:size=14
-#URxvt.letterSpace: -2
+!URxvt*background: Black
+!URxvt*foreground: #fffd00
+URxvt.font: xft:Inconsolata-Regular:size=16
+!URxvt.font: xft:Symbola:style=Regular:pixelsize=14
+!URxvt.letterSpace: -2
 URxvt.scrollBar: false
-URxvt.keysym.C-w: eval:exit;
+URxvt.keysym.C-q: eval:exit;
 
-#color theme
+!color theme
 ! special
 *.foreground:   #ffffff
 *.background:   #000000
@@ -40,7 +41,7 @@ URxvt.keysym.C-w: eval:exit;
 *.color14:      #95aec7
 
 ! white
-*.color7:       #c7ccd1
+*.color7:       #f9f1db 
 *.color15:      #f3f4f5
 
 
