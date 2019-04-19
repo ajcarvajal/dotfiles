@@ -1,8 +1,9 @@
 !URxvt*background: Black
 !URxvt*foreground: #fffd00
-URxvt.font: xft:Inconsolata-Regular:size=16
+!URxvt.font: xft:Inconsolata for Powerline:size=16
 !URxvt.font: xft:Symbola:style=Regular:pixelsize=14
-!URxvt.letterSpace: -2
+URxvt*font: xft:Inconsolata Nerd Font Mono:size=16, xft:DejaVu Sans Mono for Powerline:size=14
+URxvt*letterSpace: 0
 URxvt.scrollBar: false
 URxvt.keysym.C-q: eval:exit;
 
