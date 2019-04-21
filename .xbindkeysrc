@@ -82,6 +82,14 @@
 #mute
 "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 	XF86AudioMute
+
+
+#disable pageup/down keyboard buttons
+"nop"
+    Prior
+
+"nop"
+    Next
 ##################################
 # End of xbindkeys configuration #
 ##################################
