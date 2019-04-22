@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Aj Carvajal- Apr 2019
+
 # Returns the container ID for the specified Docker Container
 # Can search by Image Name or index 
 

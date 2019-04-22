@@ -1,10 +1,14 @@
 #!/bin/bash
 
+#Aj Carvajal- Apr 2019
+
 #simplifies groff syntax.
 #takes an input file, and an output file
 #tells groff to convert to given output type
 #pipes output to output file
 
+#EXAMPLE: 
+#	pgroff test.ms test.pdf
 
 input_file=$(basename -- $1)
 input_type="${input_file##*.}"
