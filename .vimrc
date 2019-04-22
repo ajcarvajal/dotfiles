@@ -24,7 +24,7 @@ set title
 set tabstop=4
 set shiftwidth=4
 " change tabs to insert spaces
-set expandtab
+" set expandtab
 
 
 colorscheme photon
@@ -55,12 +55,18 @@ endif
 """""""""""""""""""""
 execute pathogen#infect()
 
+"""""""""""""""""""""
+"       ALE         "
+"""""""""""""""""""""
+let g:ale_lint_on_text_changed = 'never' "only lint on save
+
 """""""""""""""""
 "   AIRLINE     "
 """""""""""""""""
 " Airline- powerline fonts
 let g:airline_symbols_powerline= 1
 let g:airline_theme='base16'
+let g:airline#extensions#ale#enabled = 1
 
 
 if !exists('g:airline_symbols')
@@ -122,7 +128,8 @@ noremap \f :NERDTreeToggle<CR>
 """""""""""""""""
 "   GUTENTAGS   "
 """""""""""""""""
-let g:gutentags_enabled = 1
+" let g:gutentags_enabled = 1
+let g:gutentags_dont_load = 1
 
 
 """""""""""""""

@@ -18,3 +18,6 @@ alias calcurse='calcurse -D ~/.config/.calcurse'
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
+
+# Map Ctrl-S to sth usefull other than XOFF (interrupt data flow).
+stty -ixon

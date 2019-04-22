@@ -29,14 +29,13 @@ data.location=~/.task
 #include /usr/share/doc/task/rc/solarized-light-256.theme
 #include /usr/share/doc/task/rc/no-color.theme
 
-dateformat=b-D
-dateformat.edit=b-D
+dateformat=D-b
+dateformat.edit=D-b
 
 
 context.school=+school
 context.life=+birthday +life
 context.work=+work +code
-context=school
 
 report.list.columns=id,depends.indicator,priority,project,tags,recur.indicator,scheduled.countdown,due,until.remaining,description.count
 report.list.labels=ID,D,P,Project,Tags,R,Sch,Due,Until,Description
