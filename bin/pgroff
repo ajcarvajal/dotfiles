@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#simplifies groff syntax.
+#takes an input file, and an output file
+#tells groff to convert to given output type
+#pipes output to output file
+
+
+input_file=$(basename -- $1)
+input_type="${input_file##*.}"
+
+output_file=$(basename -- $2)
+output_type="${output_file##*.}"
+
+groff -$input_type $input_file -T $output_type > $output_file
+
