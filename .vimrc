@@ -26,6 +26,12 @@ set shiftwidth=4
 " change tabs to insert spaces
 " set expandtab
 
+"""""""""""""""""
+"	KEYBINDS	"
+"""""""""""""""""
+noremap \t :TagbarToggle<CR>
+noremap \f :NERDTreeToggle<CR>
+noremap \m :make <CR>
 
 colorscheme photon
 
@@ -59,6 +65,7 @@ execute pathogen#infect()
 "       ALE         "
 """""""""""""""""""""
 let g:ale_lint_on_text_changed = 'never' "only lint on save
+autocmd InsertLeave * :ALELint "lint when you leave insert mode
 
 """""""""""""""""
 "   AIRLINE     "
@@ -91,7 +98,6 @@ let g:airline#extensions#whitespace#checks =
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline_section_y = ''
 let g:airline_skip_empty_sections = 1
-" let g:airline_section_z(line number, column number)
 let g:airline_section_z = 'line:%l col:%c'
 
 "mix-indent-file special treatment for /* */ comments
@@ -102,7 +108,7 @@ let airline#extensions#c_like_langs =
 """""""""""""""""
 "   NERDTREE    "
 """""""""""""""""
-" autoopen nerdtree
+" autoopen nerdtree if vim starts as a directory
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) 
             \  && !exists("s:std_in") 
@@ -121,21 +127,11 @@ autocmd bufenter * if (winnr("$") == 1
                 \| q 
                 \| endif
 
-" open tree keybind
-noremap \f :NERDTreeToggle<CR>
-
-
-"""""""""""""""""
-"   GUTENTAGS   "
-"""""""""""""""""
-" let g:gutentags_enabled = 1
-let g:gutentags_dont_load = 1
 
 
 """""""""""""""
 "   TAGBAR    "
 """""""""""""""
-noremap \t :TagbarToggle<CR>
 let g:tagbar_width = 22 
 
 
