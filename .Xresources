@@ -1,20 +1,15 @@
-!URxvt*background: Black
-!URxvt*foreground: #fffd00
-!URxvt.font: xft:Inconsolata for Powerline:size=16
-!URxvt.font: xft:Symbola:style=Regular:pixelsize=14
 URxvt*font: xft:Inconsolata Nerd Font Mono:size=15, xft:DejaVu Sans Mono for Powerline:size=14
 URxvt*letterSpace: 0
 URxvt.scrollBar: false
 
+URxvt.transparent: false
 URxvt.iso14755: false
 URxvt.iso14755_52: false
 
 URxvt.perl-ext-common: font-size
-
-!color theme
 ! special
 *.foreground:   #ffffff
-*.background:   #000000
+*.background:   [90]#000000
 *.cursorColor:  #ffffff
 
 ! black

@@ -25,6 +25,10 @@ set tabstop=4
 set shiftwidth=4
 " change tabs to insert spaces
 " set expandtab
+ 
+" Set line width to 80 for markdown files
+autocmd FileType markdown setlocal textwidth=80
+ 
 
 """""""""""""""""
 "	KEYBINDS	"
@@ -34,7 +38,6 @@ noremap \f :NERDTreeToggle<CR>
 noremap \m :make <CR>
 
 colorscheme photon
-
 
 if has("vms")
     set nobackup		" do not keep a backup file, use versions instead

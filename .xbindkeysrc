@@ -1,21 +1,5 @@
-# For the benefit of emacs users: -*- shell-script -*-
-###########################
 # xbindkeys configuration #
-###########################
-#
 # Version: 1.8.6
-#
-# If you edit this file, do not forget to uncomment any lines
-# that you change.
-# The pound(#) symbol may be used anywhere for comments.
-#
-# To specify a key, you can use 'xbindkeys --key' or
-# 'xbindkeys --multikey' and put one of the two lines in this file.
-#
-# The format of a command line is:
-#    "command to start"
-#       associated key
-#
 #
 # A list of keys is in /usr/include/X11/keysym.h and in
 # /usr/include/X11/keysymdef.h
@@ -33,63 +17,29 @@
 # NumLock, CapsLock and ScrollLock.
 # Uncomment the lines above if you want to pay attention to them.
 
-#keystate_numlock = enable
-#keystate_capslock = enable
-#keystate_scrolllock= enable
-
-# Examples of commands:
-
-#"xbindkeys_show" 
-#  control+shift + q
-
-# set directly keycode (here control + f with my keyboard)
-#"xterm"
-#  c:41 + m:0x4
-
-# specify a mouse button
-#"xterm"
-#  control + b:2
-
-#"xterm -geom 50x20+20+20"
-#   Shift+Mod2+alt + s
-#
-## set directly keycode (here control+alt+mod2 + f with my keyboard)
-#"xterm"
-#  alt + c:0x29 + m:4 + mod2
-#
-## Control+Shift+a  release event starts rxvt
-#"rxvt"
-#  release+control+shift + a
-#
-## Control + mouse button 2 release event starts rxvt
-#"rxvt"
-#  Control + b:2 + Release
-
+# keystate_numlock = enable
+# keystate_capslock = enable
+# keystate_scrolllock= enable
 
 "xbacklight -inc 10"
-	XF86MonBrightnessUp
+XF86MonBrightnessUp
 
 "xbacklight -dec 10"
-	XF86MonBrightnessDown
+XF86MonBrightnessDown
 
-#volume change
+# volume change
 "pactl set-sink-volume @DEFAULT_SINK@ +2000"
-	XF86AudioRaiseVolume
+XF86AudioRaiseVolume
 
 "pactl set-sink-volume @DEFAULT_SINK@ -2000"
-	XF86AudioLowerVolume
+XF86AudioLowerVolume
 
-#mute
+# mute
 "pactl set-sink-mute @DEFAULT_SINK@ toggle"
-	XF86AudioMute
+XF86AudioMute
 
-
-#disable pageup/down keyboard buttons
+# disable pageup/down keyboard buttons
 "nop"
-    Prior
-
+Prior
 "nop"
-    Next
-##################################
-# End of xbindkeys configuration #
-##################################
+Next
