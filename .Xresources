@@ -9,7 +9,7 @@ URxvt.iso14755_52: false
 URxvt.perl-ext-common: font-size
 ! special
 *.foreground:   #ffffff
-*.background:   [90]#000000
+*.background:   #000000
 *.cursorColor:  #ffffff
 
 ! black
