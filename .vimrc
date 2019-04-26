@@ -27,7 +27,7 @@ set shiftwidth=4
 " set expandtab
  
 " Set line width to 80 for markdown files
-autocmd FileType markdown setlocal textwidth=80
+autocmd FileType markdown setlocal textwidth=79
  
 
 """""""""""""""""
