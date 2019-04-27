@@ -1,28 +1,12 @@
 ;; -*- mode: emacs-lisp -*-
-;; This file is loaded by Spacemacs at startup.
-;; It must be stored in your home directory.
-
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
 values."
   (setq-default
-   ;; Base distribution to use. This is a layer contained in the directory
-   ;; `+distribution'. For now available distributions are `spacemacs-base'
-   ;; or `spacemacs'. (default 'spacemacs)
    dotspacemacs-distribution 'spacemacs
-   ;; Lazy installation of layers (i.e. layers are installed only when a file
-   ;; with a supported type is opened). Possible values are `all', `unused'
-   ;; and `nil'. `unused' will lazy install only unused layers (i.e. layers
-   ;; not listed in variable `dotspacemacs-configuration-layers'), `all' will
-   ;; lazy install any layer that support lazy installation even the layers
-   ;; listed in `dotspacemacs-configuration-layers'. `nil' disable the lazy
-   ;; installation feature and you have to explicitly list a layer in the
-   ;; variable `dotspacemacs-configuration-layers' to install it.
-   ;; (default 'unused)
    dotspacemacs-enable-lazy-installation 'unused
    ;; If non-nil then Spacemacs will ask for confirmation before installing
-   ;; a layer lazily. (default t)
    dotspacemacs-ask-for-lazy-installation t
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
@@ -33,16 +17,11 @@ values."
    '(
      markdown
      php
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
      ivy
      ;; auto-completion
      better-defaults
      emacs-lisp
-     ;; git
+     git
      ;; markdown
      org
      ;; (shell :variables
@@ -62,12 +41,6 @@ values."
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
-   ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
-   ;; `used-only' installs only explicitly used packages and uninstall any
-   ;; unused packages as well as their unused dependencies.
-   ;; `used-but-keep-unused' installs only the used packages but won't uninstall
-   ;; them if they become unused. `all' installs *all* packages supported by
-   ;; Spacemacs and never uninstall them. (default is `used-only')
    dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
@@ -76,42 +49,20 @@ This function is called at the very startup of Spacemacs initialization
 before layers configuration.
 You should not put any user code in there besides modifying the variable
 values."
-  ;; This setq-default sexp is an exhaustive list of all the supported
-  ;; spacemacs settings.
   (setq-default
-   ;; If non nil ELPA repositories are contacted via HTTPS whenever it's
-   ;; possible. Set it to nil if you have no way to use HTTPS in your
-   ;; environment, otherwise it is strongly recommended to let it set to t.
-   ;; This variable has no effect if Emacs is launched with the parameter
-   ;; `--insecure' which forces the value of this variable to nil.
-   ;; (default t)
    dotspacemacs-elpa-https t
-   ;; Maximum allowed time in seconds to contact an ELPA repository.
    dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
    ;; whenever you start Emacs. (default nil)
-   dotspacemacs-check-for-update nil
+   dotspacemacs-check-for-update t
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
    ;; to `emacs-version'.
    dotspacemacs-elpa-subdirectory nil
-   ;; One of `vim', `emacs' or `hybrid'.
-   ;; `hybrid' is like `vim' except that `insert state' is replaced by the
-   ;; `hybrid state' with `emacs' key bindings. The value can also be a list
-   ;; with `:variables' keyword (similar to layers). Check the editing styles
-   ;; section of the documentation for details on available variables.
-   ;; (default 'vim)
    dotspacemacs-editing-style 'vim
-   ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
-   ;; Specify the startup banner. Default value is `official', it displays
-   ;; the official spacemacs logo. An integer value is the index of text
-   ;; banner, `random' chooses a random text banner in `core/banners'
-   ;; directory. A string value must be a path to an image format supported
-   ;; by your Emacs build.
-   ;; If the value is nil then no banner is displayed. (default 'official)
    dotspacemacs-startup-banner 'official
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
@@ -120,7 +71,8 @@ values."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+                                (projects . 7)
+                                (todos . 5))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -247,7 +199,7 @@ values."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
-   ;;dotspacemacs-smooth-scrolling t
+   dotspacemacs-smooth-scrolling t
    ;; Control line numbers activation.
    ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
    ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
@@ -302,25 +254,6 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (setq org-agenda-files (list "~/org/home.org" 
-                               "~/org/school.org"))
-  (require 'org)
-  (require 'ox-latex)
-  (add-to-list 'org-latex-packages-alist '("" "minted"))
-  (setq org-latex-listings 'minted) 
-
-  (setq org-latex-pdf-process
-        '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-          "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-
-  (setq org-src-fontify-natively t)
-
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((R . t)
-     (latex . t)))
-
 )
 
 (defun dotspacemacs/user-config ()
@@ -330,6 +263,23 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+(with-eval-after-load 'org
+  (setq org-agenda-files '("~/org"))
+	(require 'ox-latex)
+	(add-to-list 'org-latex-packages-alist '("" "minted"))
+	(setq org-latex-listings 'minted) 
+
+	(setq org-latex-pdf-process
+				'("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+					"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+					"pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+	(setq org-src-fontify-natively t)
+
+	(org-babel-do-load-languages
+	 'org-babel-load-languages
+	 '((R . t)
+		 (latex . t))))
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -346,6 +296,8 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(font-use-system-font t)
  '(line-number-mode t)
+ '(neo-window-fixed-size nil)
+ '(neo-window-width 20)
  '(org-latex-classes
    (quote
     (("article" "\\documentclass[11pt]{article} \\usepackage{xcolor}"
@@ -368,17 +320,36 @@ you should place your code here."
       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
  '(package-selected-packages
    (quote
-    (magit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot unfill mwim forth-mode mmm-mode markdown-toc markdown-mode gh-md phpunit phpcbf php-extras php-auto-yasnippets yasnippet drupal-mode php-mode ws-butler winum which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-make google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump popup f dash s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed async aggressive-indent adaptive-wrap ace-window ace-link avy))))
+    (ediprolog geiser smeargle orgit magit-gitflow magit-popup gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot unfill mwim forth-mode mmm-mode markdown-toc markdown-mode gh-md phpunit phpcbf php-extras php-auto-yasnippets yasnippet drupal-mode php-mode ws-butler winum which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smex restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint ivy-hydra indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-make google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump popup f dash s diminish define-word counsel-projectile projectile pkg-info epl counsel swiper ivy column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed async aggressive-indent adaptive-wrap ace-window ace-link avy))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(font-lock-comment-face ((t (:foreground "RosyBrown4"))))
+ '(font-lock-comment-face ((t (:background "#292e34" :foreground "dim gray"))))
  '(font-lock-constant-face ((t (:foreground "tan"))))
  '(font-lock-function-name-face ((t (:inherit bold :foreground "burlywood"))))
  '(font-lock-keyword-face ((t (:inherit ## :foreground "gray85"))))
  '(font-lock-negation-char-face ((t (:foreground "indian red"))))
  '(font-lock-string-face ((t (:foreground "DarkSeaGreen4"))))
  '(font-lock-type-face ((t (:inherit bold :foreground "plum4"))))
- '(font-lock-variable-name-face ((t (:foreground "LightSkyBlue3")))))
+ '(font-lock-variable-name-face ((t (:foreground "LightSkyBlue3"))))
+ '(hl-todo ((t (:foreground "orange red" :weight bold))))
+ '(mode-line ((t (:background "#222226" :foreground "#b2b2b2" :box (:line-width 1 :color "black")))))
+ '(mode-line-buffer-id ((t (:inherit bold :foreground "IndianRed4"))))
+ '(mode-line-inactive ((t (:background "#292b2e" :foreground "#b2b2b2" :box (:line-width 1 :color "#5e1717")))))
+ '(neo-root-dir-face ((t (:inherit bold :foreground "RosyBrown3"))))
+ '(org-agenda-structure ((t (:inherit bold :foreground "pink4"))))
+ '(org-document-info-keyword ((t (:foreground "#9f8766"))))
+ '(org-headline-done ((t (:foreground "light salmon"))))
+ '(org-level-1 ((t (:inherit bold :foreground "cadet blue" :height 1.3))))
+ '(org-todo ((t (:inherit bold :background "#32322c" :foreground "firebrick"))))
+ '(powerline-active1 ((t (:background "IndianRed4" :foreground "#b2b2b2"))))
+ '(powerline-active2 ((t (:background "IndianRed4" :foreground "#b2b2b2"))))
+ '(region ((t (:background "IndianRed4"))))
+ '(spaceline-evil-insert ((t (:background "#69a04b" :foreground "#3E3D31" :inherit (quote mode-line)))))
+ '(spaceline-evil-normal ((t (:background "#a34747" :foreground "#3E3D31" :inherit (quote mode-line)))))
+ '(spaceline-highlight-face ((t (:background "#a34747" :foreground "#3E3D31" :inherit (quote mode-line)))))
+ '(tooltip ((t (:background "IndianRed4" :foreground "#b2b2b2" :underline nil :slant normal :weight normal))))
+ '(vertical-border ((t (:foreground "dim gray"))))
+ '(window-divider ((t (:foreground "dim gray")))))
