@@ -6,7 +6,7 @@
 [[ $- != *i* ]] && return
 
 
-PATH=~/bin:$PATH
+PATH=~/bin:~/.cargo/bin:$PATH
 export READER="zathura"
 export EDITOR="vim"
 

@@ -3,10 +3,7 @@
 ;; Place your private configuration here
 (setq doom-font (font-spec :family "Source Code Pro" :size 16))
 
-
-
 ;; syntax highlighting in org mode code snippets
-(with-eval-after-load 'org
   (setq org-agenda-files '("~/org"))
 	(require 'ox-latex)
 	(add-to-list 'org-latex-packages-alist '("" "minted"))
@@ -22,4 +19,13 @@
 	(org-babel-do-load-languages
 	 'org-babel-load-languages
 	 '((R . t)
-		 (latex . t))))
+		 (latex . t)))
+
+;; Rust
+;; Auto load rustmode on file open
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+(setq rust-format-on-save t)
+(add-hook 'rust-mode-hook 'cargo-minor-mode) ;; autoload cargo minor mode
+;; set PATH for cargo
+(setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name "~/.cargo/bin")))
+(setq exec-path (append exec-path (list (expand-file-name "~/.cargo/bin"))))
