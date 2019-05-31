@@ -10,7 +10,7 @@ URxvt.perl-ext-common: font-size
 ! special
 *.foreground:   #ffffff
 *.background:   #000000
-*.cursorColor:  #ffffff
+*.cursorColor:  #a36060
 
 ! black
 *.color0:       #1c2023

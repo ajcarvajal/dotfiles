@@ -33,9 +33,14 @@ autocmd FileType markdown setlocal textwidth=79
 """""""""""""""""
 "	KEYBINDS	"
 """""""""""""""""
-noremap \t :TagbarToggle<CR>
-noremap \f :NERDTreeToggle<CR>
-noremap \m :make <CR>
+noremap <space>t :NERDTreeToggle<CR>
+noremap <space>m :make <CR>
+map <space>wv :vnew <CR>
+map <space>wn :new <CR>
+map <space>wh :wincmd h <CR>
+map <space>wj :wincmd j <CR>
+map <space>wk :wincmd k <CR>
+map <space>wl :wincmd l <CR>
 
 colorscheme photon
 
@@ -70,13 +75,15 @@ execute pathogen#infect()
 let g:ale_lint_on_text_changed = 'never' "only lint on save
 autocmd InsertLeave * :ALELint "lint when you leave insert mode
 
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+
 """""""""""""""""
 "   AIRLINE     "
 """""""""""""""""
 " Airline- powerline fonts
 let g:airline_symbols_powerline= 1
 let g:airline_theme='base16'
-let g:airline#extensions#ale#enabled = 1
 
 
 if !exists('g:airline_symbols')
@@ -88,8 +95,13 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.linenr = '≡'
+let g:airline_symbols.maxlinenr = ''
+
+"ale
+let g:airline#extensions#ale#enabled = 1
+let airline#extensions#ale#warning_symbol = 'warning: '
+let airline#extensions#ale#error_symbol = 'error: '
 
 " enable fugitive for airline
 let g:airline#extensions#branch#enabled = 1
@@ -99,9 +111,9 @@ let g:airline#extensions#whitespace#checks =
             \['indent', 'long', 'mixed-indent-file']
 
 let g:airline#extensions#wordcount#enabled = 0
-let g:airline_section_y = ''
+" let g:airline_section_y = ''
 let g:airline_skip_empty_sections = 1
-let g:airline_section_z = 'line:%l col:%c'
+let g:airline_section_z = '%p%% ≡(%c,%l)'
 
 "mix-indent-file special treatment for /* */ comments
 let airline#extensions#c_like_langs = 
@@ -129,25 +141,3 @@ autocmd bufenter * if (winnr("$") == 1
             \&& b:NERDTree.isTabTree()) 
                 \| q 
                 \| endif
-
-
-
-"""""""""""""""
-"   TAGBAR    "
-"""""""""""""""
-let g:tagbar_width = 22 
-
-
-let g:tagbar_type_php = {
-    \ 'kinds' : [
-        \ 'n:namespaces:0:0',
-        \ 'a:use aliases:1:0',
-        \ 'd:constant definitions:0:0',
-        \ 'i:interfaces',
-        \ 't:traits',
-        \ 'c:classes',
-        \ 'f:functions',
-        \ '?:unknown',
-    \ ],
-\ }
-
