@@ -5,8 +5,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-
-PATH=~/bin:~/.cargo/bin:$PATH
 export READER="zathura"
 export EDITOR="vim"
 
@@ -16,7 +14,6 @@ PS1='[\u@\h \W]\$ '
 #for dotfile repo
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias audio='pavucontrol'
-alias mutt='neomutt'
 
 export VISUAL=vim
 export EDITOR="$VISUAL"
