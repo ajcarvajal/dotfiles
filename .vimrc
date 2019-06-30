@@ -149,3 +149,9 @@ autocmd bufenter * if (winnr("$") == 1
             \&& b:NERDTree.isTabTree()) 
                 \| q 
                 \| endif
+
+"---------------"
+"	 Vim-Go		"
+"---------------"
+let g:go_fmt_fail_silently = 1
+
