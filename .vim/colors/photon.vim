@@ -21,7 +21,7 @@ hi Operator ctermbg=NONE ctermfg=251 cterm=bold
 hi PreProc ctermbg=NONE ctermfg=253 cterm=NONE 
 hi Type ctermbg=NONE ctermfg=103 cterm=NONE 
 hi Boolean ctermbg=NONE ctermfg=131 cterm=NONE
-hi Function ctermbg=NONE ctermfg=146 cterm=NONE
+hi Function ctermbg=NONE ctermfg=109 cterm=NONE
 hi Special ctermbg=NONE ctermfg=243 cterm=NONE 
 hi Error ctermbg=NONE ctermfg=132 cterm=NONE 
 hi Warning ctermbg=NONE ctermfg=136 cterm=NONE 

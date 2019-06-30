@@ -34,13 +34,21 @@ autocmd FileType markdown setlocal textwidth=79
 "	KEYBINDS	"
 """""""""""""""""
 noremap <space>t :NERDTreeToggle<CR>
-noremap <space>m :make <CR>
-map <space>wv :vnew <CR>
-map <space>wn :new <CR>
-map <space>wh :wincmd h <CR>
-map <space>wj :wincmd j <CR>
-map <space>wk :wincmd k <CR>
-map <space>wl :wincmd l <CR>
+map <space>m :make <CR>
+noremap <space>wv :vnew <CR>
+noremap <space>wn :new <CR>
+noremap <space>wh :wincmd h <CR>
+noremap <space>wj :wincmd j <CR>
+noremap <space>wk :wincmd k <CR>
+noremap <space>wl :wincmd l <CR>
+
+noremap <space>rh :vertical resize +5 <CR>
+noremap <space>rl :vertical resize -5 <CR>
+noremap <space>rj :resize -5 <CR>
+noremap <space>rk :resize +5 <CR>
+
+"Make rebinds based on filetype
+autocmd FileType go map <space>m :GoRun <CR>
 
 colorscheme photon
 
