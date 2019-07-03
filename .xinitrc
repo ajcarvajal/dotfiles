@@ -32,6 +32,9 @@ fi
 #swap capslock and escape
 setxkbmap -option "caps:swapescape"
 
+#reverse trackpoint scroll direction
+xinput set-prop "TPPS/2 IBM TrackPoint" "libinput Natural Scrolling Enabled" 0
+
 #programs to run on startup
 exec i3  
 
