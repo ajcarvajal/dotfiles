@@ -81,7 +81,7 @@ execute pathogen#infect()
 "       ALE         "
 """""""""""""""""""""
 let g:ale_lint_on_text_changed = 'never' "only lint on save
-autocmd InsertLeave * :ALELint "lint when you leave insert mode
+" autocmd InsertLeave * :ALELint "lint when you leave insert mode
 
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'

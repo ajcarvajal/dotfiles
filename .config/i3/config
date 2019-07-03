@@ -179,7 +179,7 @@ bar {
 }
 
 exec --no-startup-id feh --bg-fill /home/aj/pictures/wallpaper.jpg
-exec --no-startup-id "compton -b"
+exec --no-startup-id "compton -b --xrender-sync-fence"
 exec --no-startup-id "xbindkeys -p"
 
 for_window[class=".*"] border pixel 1
