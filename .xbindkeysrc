@@ -38,6 +38,13 @@ XF86AudioLowerVolume
 "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 XF86AudioMute
 
+# redshift
+"redshift -O 4600"
+XF86LaunchA
+
+"redshift -x"
+XF86Explorer
+
 # disable pageup/down keyboard buttons
 "nop"
 Prior
