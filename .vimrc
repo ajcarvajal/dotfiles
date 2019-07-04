@@ -49,6 +49,7 @@ noremap <space>rk :resize +5 <CR>
 
 "Make rebinds based on filetype
 autocmd FileType go map <space>m :GoRun <CR>
+autocmd FileType rust map <space>m :!cargo run <CR>
 
 colorscheme photon
 
