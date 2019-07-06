@@ -29,6 +29,10 @@ set shiftwidth=4
 " Set line width to 80 for markdown files
 autocmd FileType markdown setlocal textwidth=79
  
+"line folding
+set foldmethod=syntax 
+"automatically open all fold on file open
+autocmd Syntax * normal zR
 
 """""""""""""""""
 "	KEYBINDS	"
@@ -156,3 +160,9 @@ autocmd bufenter * if (winnr("$") == 1
 "---------------"
 let g:go_fmt_fail_silently = 1
 
+
+"---------------"
+"	Vim-Rust	"
+"---------------"
+"run RustFmt on save
+let g:rustfmt_autosave = 1
