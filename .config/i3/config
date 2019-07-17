@@ -137,7 +137,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 			  #border  backgr   text  indicator  child_border
-client.focused #c9a988 #285577 #ffffff #2e9ef4 #967d63
+client.focused #c9a988 #285577 #ffffff #a88f76 #c9a988
 
 
 

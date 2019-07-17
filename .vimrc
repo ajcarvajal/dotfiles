@@ -55,6 +55,10 @@ noremap <space>rk :resize +5 <CR>
 autocmd FileType go map <space>m :GoRun <CR>
 autocmd FileType rust map <space>m :!cargo run <CR>
 
+"terminal keybinds
+tnoremap <Esc> <C-W>N
+
+
 colorscheme photon
 
 if has("vms")
@@ -166,3 +170,14 @@ let g:go_fmt_fail_silently = 1
 "---------------"
 "run RustFmt on save
 let g:rustfmt_autosave = 1
+
+"rusty-tags
+" autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
+"autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
+
+"vim-racer
+let g:racer_cmd = "~/.cargo/bin/racer"
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
