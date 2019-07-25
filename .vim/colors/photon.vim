@@ -6,7 +6,7 @@ endif
 
 let colors_name = "photon"
 
-hi Normal ctermbg=black ctermfg=251 cterm=NONE 
+hi Normal ctermbg=234 ctermfg=251 cterm=NONE 
 	
 
 set background=dark

@@ -15,6 +15,9 @@ PS1='[\u@\h \W]\$ '
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias audio='pavucontrol'
 
+#confirm deletion of 3 or more files
+alias rm='rm -I'
+
 export VISUAL=vim
 export EDITOR="$VISUAL"
 

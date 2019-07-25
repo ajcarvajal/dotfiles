@@ -20,6 +20,14 @@ set autoindent
 "for compton exceptions
 set title
 
+"for st background color
+if &term =~ '256color'
+	set t_ut=
+end
+
+"for st mouse scroll
+set ttymouse=sgr
+
 " tab width
 set tabstop=4
 set shiftwidth=4
