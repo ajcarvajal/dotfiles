@@ -11,7 +11,32 @@ set wildmenu
 source $VIMRUNTIME/defaults.vim
 
 " enable line count
-set number
+set number relativenumber
+
+" make splits open below, and right
+set splitbelow splitright
+
+"""""""""""""
+" PACKAGES  "
+"""""""""""""
+"check if plug.vim is installed, download if needed
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'w0rp/ale'
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-vinegar'
+Plug 'junegunn/goyo.vim'
+call plug#end()
 
 " indentation settings
 filetype plugin on
@@ -42,10 +67,10 @@ set foldmethod=syntax
 "automatically open all fold on file open
 autocmd Syntax * normal zR
 
+
 """""""""""""""""
 "	KEYBINDS	"
 """""""""""""""""
-noremap <space>t :NERDTreeToggle<CR>
 map <space>m :make <CR>
 noremap <space>wv :vnew <CR>
 noremap <space>wn :new <CR>
@@ -87,12 +112,6 @@ endif
 if has('syntax') && has('eval')
     packadd! matchit
 endif
-
-
-"""""""""""""""""""""
-"      PLUGINS      "
-"""""""""""""""""""""
-execute pathogen#infect()
 
 """""""""""""""""""""
 "       ALE         "
@@ -144,28 +163,6 @@ let g:airline_section_z = '%p%% ≡(%c,%l)'
 let airline#extensions#c_like_langs = 
             \ ['arduino', 'c', 'cpp', 'cuda', 'go', 'javascript', 'ld', 'php']
 
-
-"""""""""""""""""
-"   NERDTREE    "
-"""""""""""""""""
-" autoopen nerdtree if vim starts as a directory
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) 
-            \  && !exists("s:std_in") 
-            \          | exe 'NERDTree' argv()[0]
-            \          | wincmd p 
-            \          | ene 
-            \          | exe 'cd '.argv()[0] 
-            \  | endif
-
-let g:NERDTreeWinSize = 22 
-
-" auto close tree if last window open
-autocmd bufenter * if (winnr("$") == 1 
-            \&& exists("b:NERDTree") 
-            \&& b:NERDTree.isTabTree()) 
-                \| q 
-                \| endif
 
 "---------------"
 "	 Vim-Go		"
