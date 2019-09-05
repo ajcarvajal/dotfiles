@@ -46,7 +46,7 @@ XF86LaunchA
 XF86Explorer
 
 # disable pageup/down keyboard buttons
-"nop"
-Prior
-"nop"
-Next
+# "nop"
+# Prior
+# "nop"
+# Next

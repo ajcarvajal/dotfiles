@@ -7,8 +7,12 @@ set nocompatible
 "file searching
 set path+=**
 
+" disable showmode so jedi can show call signatures in command line
+set noshowmode
+
 " Display all matching files with tab complete
 set wildmenu
+set wildignore+=**/node_modules/**
 
 " Get the defaults that most users want.
 source $VIMRUNTIME/defaults.vim
@@ -26,9 +30,11 @@ set autoindent
 " tab width
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
+filetype indent plugin on
 " change tabs to insert spaces
-" set expandtab
- 
+set expandtab
+
 " Set line width to 80 for markdown files
 autocmd FileType markdown setlocal textwidth=79
 
@@ -44,6 +50,11 @@ else
 endif
 
 
+"mode based line color
+:autocmd InsertEnter,InsertLeave * set cul!
+
+"flag extra whitespace
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 "-----------------------"
 "	TERMINAL SETTINGS	"
@@ -53,11 +64,22 @@ set title
 
 "st background color
 if &term =~ '256color'
-	set t_ut=
+    set t_ut=
 end
 
 "st mouse scroll
 set ttymouse=sgr
+
+" distinguish alt from esc
+" https://stackoverflow.com/questions/6778961/alt-key-shortcuts-not-working-on-gnome-terminal-with-vim/10216459#10216459
+let c='a'
+while c <= 'z'
+    exec "set <A-".c.">=\e".c
+    exec "imap \e".c." <A-".c.">"
+    let c = nr2char(1+char2nr(c))
+endw
+
+set timeout ttimeoutlen=50
 
 
 "---------------"
@@ -70,6 +92,9 @@ noremap <space>wh :wincmd h <CR>
 noremap <space>wj :wincmd j <CR>
 noremap <space>wk :wincmd k <CR>
 noremap <space>wl :wincmd l <CR>
+
+nnoremap <A-j> 5j
+nnoremap <A-k> 5k
 
 noremap <space>rh :vertical resize +5 <CR>
 noremap <space>rl :vertical resize -5 <CR>
@@ -89,21 +114,22 @@ tnoremap <Esc> <C-W>N
 "---------------"
 "check if plug.vim is installed, download if needed
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin('~/.vim/plugged')
-	Plug 'w0rp/ale'
-	Plug 'rust-lang/rust.vim'
-	Plug 'racer-rust/vim-racer'
-	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
-	Plug 'tpope/vim-fugitive'
-	Plug 'airblade/vim-gitgutter'
-	Plug 'tpope/vim-vinegar'
-	Plug 'junegunn/goyo.vim'
+Plug 'w0rp/ale'
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-vinegar'
+Plug 'vimwiki/vimwiki'
+Plug 'davidhalter/jedi-vim'
 call plug#end()
 
 "Improve :%s matching
@@ -175,3 +201,11 @@ au FileType rust nmap gd <Plug>(rust-def)
 au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
+
+"-----------"
+"	Jedi    "
+"-----------"
+let g:jedi#popup_on_dot = 0
+let g:jedi#completions_enabled = 1
+let g:jedi#show_call_signatures = 2

@@ -14,6 +14,7 @@ PS1='[\u@\h \W]\$ '
 #for dotfile repo
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias audio='pavucontrol'
+alias wifi='nmtui'
 
 alias :q='exit'
 

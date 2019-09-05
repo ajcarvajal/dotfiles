@@ -184,6 +184,7 @@ exec --no-startup-id "xbindkeys -p"
 
 for_window[class=".*"] border pixel 1
 
+smart_borders on
 gaps inner 0
 gaps outer 0
 
