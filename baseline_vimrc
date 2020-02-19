@@ -1,0 +1,56 @@
+" disable vi compatability
+set nocompatible
+
+" consolidate backup/swap files into .vim 
+"   otherwise vim shits up the current directory with extra files
+set backupdir=~/.vim/backup
+set directory=~/.vim/swaps
+
+" use a backup and swap file
+set backup
+if has('persistent_undo')
+    set undofile
+endif
+
+"file searching
+set path=$PWD**
+
+" Display all matching files with tab complete
+set wildmenu
+
+" Ignore files from tab complete (add nodejs or IDE poop files to this)
+" I name all my python virtual environments 'env' so this ignores those files
+set wildignore+=env/*  
+
+" enable line count
+"   relativenumber makes it easier to do repeated commands
+"   that are relative to current cursor position
+"   for example: deleting x lines of code. d<x>j 
+set number relativenumber
+
+" make splits open below, and right
+"   Not super important but it is more intuitive to open new
+"   windows left->right and top->down
+set splitbelow splitright
+
+" indentation settings
+filetype plugin on
+set autoindent
+set foldmethod=indent
+
+" tab width
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set fileformat=unix
+
+" change tabs to insert spaces
+set expandtab
+
+" remove trailing whitespace on save
+"   I only do this for python files, add any extensions you want
+autocmd! BufWritePre *.py %s/\s\+$//e
+
+
+"mode based line color
+autocmd InsertEnter,InsertLeave * set cul!
