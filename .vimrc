@@ -1,211 +1,178 @@
 "-----------------------"
 "	GENERAL SETTINGS	"
 "-----------------------"
-" disable vi compatability
-set nocompatible
+    " disable vi compatability
+    set nocompatible
 
-"file searching
-set path+=**
+    " colorscheme location is ~/.vim/colors
+    colorscheme photon
 
-" disable showmode so jedi can show call signatures in command line
-set noshowmode
+    "file searching
+    set path=$PWD**
 
-" Display all matching files with tab complete
-set wildmenu
-set wildignore+=**/node_modules/**
+    " Display all matching files with tab complete
+    set wildmenu
+    set wildignore+=env/*
 
-" Get the defaults that most users want.
-source $VIMRUNTIME/defaults.vim
+    " disable showmode so jedi can show call signatures in command line
+    set noshowmode
 
-" enable line count
-set number relativenumber
+    " disable statusline
+    set laststatus=0
 
-" make splits open below, and right
-set splitbelow splitright
+    " disable showmode so jedi can show call signatures in command line
+    set noshowmode
 
-" indentation settings
-filetype plugin on
-set autoindent
+    " enable line count
+    set number relativenumber
 
-" tab width
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-filetype indent plugin on
-" change tabs to insert spaces
-set expandtab
+    " make splits open below, and right
+    set splitbelow splitright
 
-" Set line width to 80 for markdown files
-autocmd FileType markdown setlocal textwidth=79
+    "mode based line color
+    autocmd InsertEnter,InsertLeave * set cul!
 
-colorscheme photon
+    " use backup/undo files
+    set backup 
+    set undofile  " allows undos from previous sessions
 
-if has("vms")
-    set nobackup		" do not keep a backup file, use versions instead
-else
-    set backup		" keep a backup file (restore to previous version)
-    if has('persistent_undo')
-        set undofile	" keep an undo file (undo changes after closing)
-    endif
-endif
+    " consolidate backup/swap files into .vim 
+    set backupdir=~/.vim/backup
+    set directory=~/.vim/swaps
+    set undodir=~/.vim/undo
 
+"------------------------"
+"    SYNTAX/FORMATTING   "
+"------------------------"
+    " indentation settings
+    filetype plugin on
+    set autoindent 
+    set foldmethod=indent
 
-"mode based line color
-:autocmd InsertEnter,InsertLeave * set cul!
+    " tab width
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set fileformat=unix
 
-"flag extra whitespace
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+    " change tabs to insert spaces
+    set expandtab
+
+    " filetype specific textwidth
+    autocmd FileType markdown setlocal textwidth=79
+    autocmd FileType python setlocal textwidth=120
+
+    " remove trailing whitespace on save for python files only
+    autocmd! BufWritePre *.py %s/\s\+$//e
+
 
 "-----------------------"
 "	TERMINAL SETTINGS	"
 "------------------------"
-"set title for matching compton exception. Disables transparency
-set title
+    " distinguish alt from esc
+    " https://stackoverflow.com/questions/6778961/alt-key-shortcuts-not-working-on-gnome-terminal-with-vim/10216459#10216459
+    let c='a'
+    while c <= 'z'
+        exec "set <A-".c.">=\e".c
+        exec "imap \e".c." <A-".c.">"
+        let c = nr2char(1+char2nr(c))
+    endw
 
-"st background color
-if &term =~ '256color'
-    set t_ut=
-end
+    " set timeout lengths for keybinds
+    " determines how long vim waits after you press first part of keybind
+    set timeout ttimeoutlen=50
 
-"st mouse scroll
-set ttymouse=sgr
-
-" distinguish alt from esc
-" https://stackoverflow.com/questions/6778961/alt-key-shortcuts-not-working-on-gnome-terminal-with-vim/10216459#10216459
-let c='a'
-while c <= 'z'
-    exec "set <A-".c.">=\e".c
-    exec "imap \e".c." <A-".c.">"
-    let c = nr2char(1+char2nr(c))
-endw
-
-set timeout ttimeoutlen=50
+    set mouse=a " putty mouse scrolling
 
 
 "---------------"
 "	KEYBINDS	"
 "---------------"
-map <space>m :make <CR>
-noremap <space>wv :vnew <CR>
-noremap <space>wn :new <CR>
-noremap <space>wh :wincmd h <CR>
-noremap <space>wj :wincmd j <CR>
-noremap <space>wk :wincmd k <CR>
-noremap <space>wl :wincmd l <CR>
+    " open command window with ;
+    nnoremap ; :
+    nnoremap : ;
+    vnoremap ; :
+    vnoremap : ;
 
-nnoremap <A-j> 5j
-nnoremap <A-k> 5k
+    " Window splits
+    noremap <space>wv :vnew <CR>
+    noremap <space>wn :new <CR>
+    noremap <space>wh :wincmd h <CR>
+    noremap <space>wj :wincmd j <CR>
+    noremap <space>wk :wincmd k <CR>
+    noremap <space>wl :wincmd l <CR>
 
-noremap <space>rh :vertical resize +5 <CR>
-noremap <space>rl :vertical resize -5 <CR>
-noremap <space>rj :resize -5 <CR>
-noremap <space>rk :resize +5 <CR>
+    " resize window splits
+    noremap <space>rh :vertical resize +5 <CR>
+    noremap <space>rl :vertical resize -5 <CR>
+    noremap <space>rj :resize -5 <CR>
+    noremap <space>rk :resize +5 <CR>
 
-"Make rebinds based on filetype
-autocmd FileType go map <space>m :GoRun <CR>
-autocmd FileType rust map <space>m :!cargo run <CR>
+    " scroll 5 lines at a time with Alt
+    nnoremap <A-j> 5j
+    nnoremap <A-k> 5k
 
-"terminal keybinds
-tnoremap <Esc> <C-W>N
+    " open fzf
+    nnoremap \f :Files<CR>
+
+    " open fugitive git status
+    nnoremap \t :Gst<CR>
+
+    " clear previous search highlight with tilde key
+    nnoremap ` :let @/ = "" <CR>
+
+    " reload syntax highlighting (when folds mess strings up)
+    nnoremap \r :syntax sync fromstart<CR>
+
+    " fold diff files with \z
+    nnoremap \z :setlocal foldmethod=expr foldexpr=DiffFold(v:lnum) <CR>
+    function! DiffFold(lnum)
+        let line = getline(a:lnum)
+        if line =~ '^\(---\|+++\|@@\) '
+            return 1
+        elseif line[0] =~ '[-+ ]'
+            return 2
+        else
+            return 0
+        endif
+    endfunction
 
 
 "---------------"
 "	PACKAGES	"
 "---------------"
-"check if plug.vim is installed, download if needed
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+    "check if plug.vim is installed, download if needed
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
 
-call plug#begin('~/.vim/plugged')
-Plug 'w0rp/ale'
-Plug 'rust-lang/rust.vim'
-Plug 'racer-rust/vim-racer'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-vinegar'
-Plug 'vimwiki/vimwiki'
-Plug 'davidhalter/jedi-vim'
-call plug#end()
-
-"Improve :%s matching
-if has('syntax') && has('eval')
-    packadd! matchit
-endif
-
-"-------------------"
-"		ALE         "
-"-------------------"
-let g:ale_lint_on_text_changed = 'never' "only lint on save
-
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-
-"---------------"
-"	AIRLINE     "
-"---------------"
-" Airline- powerline fonts
-let g:airline_symbols_powerline= 1
-let g:airline_theme='base16'
-
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = '≡'
-let g:airline_symbols.maxlinenr = ''
-
-"ale
-let g:airline#extensions#ale#enabled = 1
-let airline#extensions#ale#warning_symbol = 'warning: '
-let airline#extensions#ale#error_symbol = 'error: '
-
-" enable fugitive for airline
-let g:airline#extensions#branch#enabled = 1
-
-" whitespace warnings
-let g:airline#extensions#whitespace#checks = 
-            \['indent', 'long', 'mixed-indent-file']
-
-let g:airline#extensions#wordcount#enabled = 0
-" let g:airline_section_y = ''
-let g:airline_skip_empty_sections = 1
-let g:airline_section_z = '%p%% ≡(%c,%l)'
-
-
-"---------------"
-"	 Vim-Go		"
-"---------------"
-let g:go_fmt_fail_silently = 1
-
-
-"---------------"
-"	Vim-Rust	"
-"---------------"
-"run RustFmt on save
-let g:rustfmt_autosave = 1
-
-"vim-racer
-let g:racer_cmd = "~/.cargo/bin/racer"
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gx <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gd <Plug>(rust-doc)
+    " Remember to run PlugInstall after adding to this list
+    call plug#begin('~/.vim/plugged')
+    Plug 'tpope/vim-fugitive'  " git wrapper. Enables :Gbl, :Gst, :Git diff <branch>
+    Plug 'airblade/vim-gitgutter'  " show git changes in gutter, allows Hunk undo to revert line change
+    Plug 'tpope/vim-vinegar'  " makes netrw better
+    Plug 'davidhalter/jedi-vim'  " python IDE features like autocomplete and goto def
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " download fzf if not found
+    Plug 'junegunn/fzf.vim'  " enables fzf integration with vim
+    call plug#end()
 
 
 "-----------"
 "	Jedi    "
 "-----------"
-let g:jedi#popup_on_dot = 0
-let g:jedi#completions_enabled = 1
-let g:jedi#show_call_signatures = 2
+    "  disable auto completion for object methods
+    "  press ctrl space for popup
+    let g:jedi#popup_on_dot = 0   
+    let g:jedi#completions_enabled = 1
+    let g:jedi#show_call_signatures = 2
+    let g:jedi#rename_command = ""  " this was conflicting with syntax sync fromstart
+
+
+"---------------"
+"      FZF      "
+"---------------"
+    " change Files command to show file previews
+    command! -bang -nargs=? -complete=dir Files
+        \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>1)

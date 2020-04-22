@@ -27,7 +27,7 @@ man() {
 alias vim="/usr/bin/vim"
 
 alias ls='ls --color=auto --file-type'
-export LS_COLORS='ex=35;01:ow=34;01'
+export LS_COLORS='di=33;01:ex=35;01:tw=33;01:ow=33;01'
 
 # confirm deletion of 3 or more files
 alias rm='rm -I'
