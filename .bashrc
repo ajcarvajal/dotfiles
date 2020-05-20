@@ -5,6 +5,8 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+[[ $TERM != "screen-256color" ]] && exec tmux
+
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
@@ -35,6 +37,9 @@ alias rm='rm -I'
 # Tree color
 alias tree='tree -C'
 
+# C drive alias for WSL
+alias cdc='cd /mnt/c/Users/alcarvaj'
+
 alias fd=fdfind
 
 export VISUAL=vim
@@ -53,13 +58,13 @@ export PS1="\[\033[38;5;175m\][\[$(tput sgr0)\]\[\033[38;5;181m\]\u@\h\[$(tput s
 
 alias fzf="fzf --preview '/usr/bin/bat --color=always --theme=OneHalfDark {}'"
 export BAT_THEME='DarkNeon'
-export FZF_DEFAULT_COMMAND='fdfind -H --exclude=*/env/** --exclude=**/.local/* --exclude=**/.vim/* --exclude=**/.git/* --exclude=.fzf/*'
+export FZF_DEFAULT_COMMAND='fdfind -H --exclude=*/env/** --exclude=**/.*/*'
 export FZF_CTRL_T_COMMAND='$FZF_DEFAULT_COMMAND'
 
 _fzf_compgen_path() {
-    fd --hidden --exclude="*/env/*"  --exclude="*/.local/*" --exclude="*/.vim/*" --exclude="*/.git/*" . "$1"
+    fd --hidden --exclude="*/env/*"  --exclude="*/.*/*" . "$1"
 }
 
 _fzf_compgen_dir() {
-    fd --hidden --exclude="*/env/*"  --exclude=".local/*" --exclude="*/.vim/*" --exclude="*/.git/*" . "$1"
+    fd --hidden --exclude="*/env/*"  --exclude="*/.*/*" . "$1"
 }
