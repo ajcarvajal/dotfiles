@@ -1,0 +1,30 @@
+theme = "solarized-dark"
+
+[[block]]
+block = "net"
+device = "wlp4s0"
+ssid = true
+speed_up = false
+speed_down = false
+
+[[block]]
+block = "disk_space"
+path = "/"
+alias = "/"
+info_type = "available"
+unit = "GB"
+interval = 60
+show_percentage = true
+
+[[block]]
+block = "battery"
+interval = 20
+format = "{percentage}%"
+
+[[block]]
+block = "sound"
+
+[[block]]
+block = "time"
+interval = 60
+format = "%a %d/%m   |   %R"

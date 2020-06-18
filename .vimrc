@@ -62,6 +62,8 @@
     autocmd FileType markdown setlocal textwidth=79
     autocmd FileType python setlocal textwidth=120
 
+    au BufRead,BufNewFile *.nix set filetype=sh
+
     " remove trailing whitespace on save for python files only
     autocmd! BufWritePre *.py %s/\s\+$//e
 
@@ -172,6 +174,8 @@
 "---------------"
 "      COC      "
 "---------------"
+    " supported languages
+    let g:coc_global_extensions=[ 'coc-omnisharp' ]
     " Some servers have issues with backup files, see #649.
     " set nobackup
     " set nowritebackup
@@ -191,8 +195,7 @@
     set signcolumn=yes
 
     " Use tab for trigger completion with characters ahead and navigate.
-    " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-    " other plugin before putting this into your config.
+    " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by " other plugin before putting this into your config.
     inoremap <silent><expr> <TAB>
                 \ pumvisible() ? "\<C-n>" :
                 \ <SID>check_back_space() ? "\<TAB>" :
@@ -210,12 +213,12 @@
     " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
     " position. Coc only does snippet and additional edit on confirm.
     " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-    if exists('*complete_info')
-        inoremap <expr> <cr> complete_info()["selected"]
-        != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-    else
-        inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-    endif
+    " if exists('*complete_info')
+    "     inoremap <expr> <cr> complete_info()["selected"]
+    "     != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+    " else
+    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+    " endif
 
     " Use `[g` and `]g` to navigate diagnostics
     nmap <silent> [g <Plug>(coc-diagnostic-prev)
