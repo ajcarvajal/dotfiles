@@ -9,13 +9,27 @@
   system.stateVersion = "20.03"; 
 
   environment.systemPackages = with pkgs; [
-    wget vim firefox lshw git 
-    rustc cargo nodejs bat 
-    inconsolata fd alacritty
-    emacs ripgrep coreutils
-    clang gnupg actkbd light
-    font-awesome python3
-    guile redshift
+    # system_util
+    redshift light actkbd htop powertop
+
+    # base_development
+    coreutils wget git lshw clang gnupg
+    vim emacs
+
+    # tools
+    firefox bat fd alacritty ripgrep
+
+    # languages
+    rustc cargo
+    python3
+
+    # fonts
+    inconsolata
+    font-awesome
+
+    # shitty dependencies
+    nodejs 
+
   ];
 
   users.users.aj = {
@@ -32,18 +46,20 @@
   hardware.enableAllFirmware = true;
   nixpkgs.config.allowUnfree = true;
 
+  powerManagement = { 
+    cpuFreqGovernor = "powersave"; 
+    powertop.enable = true;
+    powerDownCommands = "";
+    powerUpCommands = "";
+  };
+
   networking = {
     hostName = "nixos";
     useDHCP = false;  # deprecated. Set false and whitelist interfaces
     interfaces.enp0s31f6.useDHCP = true; # ethernet
-    interfaces.wlp4s0.useDHCP = true;    # wireless
+    interfaces.wlp0s20f3.useDHCP = true; # wireless
     networkmanager.enable = true;        # KDE nm uses this
     nameservers = [ "1.1.1.1" ];         # default DNS server    
-    wireless.networks = {
-        poop = {
-            psk = "9257cf6352d011a4ddd629dd386991ac2e15048c25310477e15040fc6d7b9cb3";
-        };
-    };
   };
 
   # Enable the OpenSSH daemon.
@@ -92,6 +108,9 @@
     bindings = [
         { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 20"; } 
         { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 20"; }  
+        # { keys = [ 113 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/runuser -l aj -c 'amixer -q set Master toggle'"; }  
+        # { keys = [ 114 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/runuser -l aj -c 'amixer -q set Master 5%- unmute'"; }  
+        # { keys = [ 115 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/runuser -l aj -c 'amixer -q set Master 5%+ unmute'"; }  
     ];
   };
 
@@ -99,6 +118,7 @@
 
   # Enable sound.
   sound.enable = true;
+  sound.mediaKeys.enable = true;
   hardware.pulseaudio.enable = true;
 
   # Enable the KDE Desktop Environment.
