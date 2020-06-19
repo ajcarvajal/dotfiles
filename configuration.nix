@@ -25,13 +25,8 @@
 
     # fonts
     inconsolata
-    font-awesome_4
     font-awesome
     powerline-fonts
-
-    # shitty dependencies
-    nodejs 
-
   ];
 
   users.users.aj = {
@@ -110,9 +105,9 @@
     bindings = [
         { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 20"; } 
         { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 20"; }  
-        # { keys = [ 113 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/runuser -l aj -c 'amixer -q set Master toggle'"; }  
-        # { keys = [ 114 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/runuser -l aj -c 'amixer -q set Master 5%- unmute'"; }  
-        # { keys = [ 115 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/runuser -l aj -c 'amixer -q set Master 5%+ unmute'"; }  
+        { keys = [ 113 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle"; }  
+        { keys = [ 114 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/pactl set-sink-volume @DEFAULT_SINK@ -2000"; }  
+        { keys = [ 115 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/pactl set-sink-volume @DEFAULT_SINK@ +2000"; }  
     ];
   };
 
@@ -120,7 +115,7 @@
 
   # Enable sound.
   sound.enable = true;
-  sound.mediaKeys.enable = true;
+  # sound.mediaKeys.enable = true;
   hardware.pulseaudio.enable = true;
 
   # Bluetooth
