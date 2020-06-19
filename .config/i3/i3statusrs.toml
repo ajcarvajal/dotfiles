@@ -1,20 +1,31 @@
-theme = "solarized-dark"
+[theme]
+name = "gruvbox-dark"
+[theme.overrides]
+separator = "  |   "
+good_bg = "#2b2827"
+warning_bg = "#2b2827"
+
+[icons]
+name = "awesome"
 
 [[block]]
 block = "net"
-device = "wlp4s0"
+device = "wlp0s20f3"
 ssid = true
 speed_up = false
 speed_down = false
 
+#[[block]]
+# block = "disk_space"
+#path = "/"
+#alias = "/"
+#info_type = "available"
+#unit = "GB"
+#interval = 60
+#show_percentage = true
+
 [[block]]
-block = "disk_space"
-path = "/"
-alias = "/"
-info_type = "available"
-unit = "GB"
-interval = 60
-show_percentage = true
+block = "sound"
 
 [[block]]
 block = "battery"
@@ -22,9 +33,6 @@ interval = 20
 format = "{percentage}%"
 
 [[block]]
-block = "sound"
-
-[[block]]
 block = "time"
 interval = 60
-format = "%a %d/%m   |   %R"
+format = "%R   %a %m/%d"

@@ -146,8 +146,9 @@ bar {
 	font pango:Terminus 15px
 	separator_symbol " | "
 	colors {
-		background #2c313a
+		background #2b2827
 		separator #666666
+        focused_workspace #c7b9b3 #544f4d #ded7ce
 	}
 }
 

@@ -25,7 +25,9 @@
 
     # fonts
     inconsolata
+    font-awesome_4
     font-awesome
+    powerline-fonts
 
     # shitty dependencies
     nodejs 
@@ -121,6 +123,7 @@
   sound.mediaKeys.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Enable the KDE Desktop Environment.
-  # services.xserver.desktopManager.plasma5.enable = true;
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 }
