@@ -5,7 +5,7 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-[[ $TERM != "screen-256color" ]] && exec tmux
+# [[ $TERM != "screen-256color" ]] && exec tmux
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
@@ -26,7 +26,7 @@ man() {
     command man "$@"
 }
 
-alias vim="/usr/bin/vim"
+# alias vim="/usr/bin/vim"
 
 alias ls='ls --color=auto --file-type'
 export LS_COLORS='ex=35;01:ow=34;01'
