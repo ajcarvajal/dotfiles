@@ -1,0 +1,7 @@
+.git
+.local
+.npm
+.cargo
+.cache
+.rustup
+paru/*
