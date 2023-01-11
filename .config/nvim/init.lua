@@ -2,11 +2,6 @@ vim.cmd('set runtimepath^=~/.vim runtimepath+=~/.vim/after')
 vim.cmd('let &packpath = &runtimepath')
 
 vim.cmd('au TextYankPost * silent! lua vim.highlight.on_yank()')
---[[
-vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = vim.highlight.on_yank,
-})
-]]
 
 -- Non plugin keymaps
 vim.keymap.set('n', '`', ':noh<CR>', {})
@@ -32,6 +27,8 @@ vim.cmd('set undofile')
 
 -- automatically change dir to project root on file change
 require('autochdir')
+
+vim.opt.timeoutlen = 500
 
 -- LSP Diagnostics
 local sign = function(opts)
@@ -103,26 +100,41 @@ require("lazy").setup(
             vim.opt.termguicolors = true
         end
     },
-    { 'ibhagwan/fzf-lua',
+    { 'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+    },
+    { 'nvim-telescope/telescope.nvim',
+        dependencies = { 'nvim-telescope/telescope-fzf-native.nvim' },
         config = function()
-            fzf = require('fzf-lua')
-            fzf.setup({ 
-                files = { 
-                    fd_opts = "--color=never --type f --hidden --follow"
-                }})
-            vim.keymap.set('n', '<leader>ff', '<cmd>lua fzf.files()<CR>')
-            vim.keymap.set('n', '<leader>fF', '<cmd>lua fzf.files({ cwd = "~" })<CR>')
-            vim.keymap.set('n', '<leader>fw', '<cmd>lua fzf.files({ cwd = "mnt/d/repo/" })<CR>')
-            vim.keymap.set('n', '<leader>fs', '<cmd>lua fzf.grep_cword()<CR>')
-            vim.keymap.set('n', '<leader>fS', '<cmd>lua fzf.live_grep_native()<CR>')
-            vim.keymap.set('n', '<leader>fj', '<cmd>lua fzf.grep_curbuf()<CR>')
+            local telescope = require('telescope')
+            telescope.setup({
+                defaults = {
+                    file_ignore_patterns = {
+                        ".git/*", ".local/*", ".npm/*", ".rustup/*", ".cache/*"
+                    },
+                },
+                pickers = {
+                    find_files = {
+                        hidden = true
+                    },
+                },
+            })
+
+            telescope.load_extension('fzf')
+            telescope.load_extension('noice')
         end
     },
     { 'williamboman/mason.nvim',
-        config = true
+        config = true,
     },
     { 'williamboman/mason-lspconfig.nvim',
         dependencies = { 'williamboman/mason.nvim' },
+        config = function()
+            require('mason-lspconfig').setup({
+                ensure_installed = { "rust_analyzer" },
+                automatic_installation = true,
+            })
+        end
     },
     { 'neovim/nvim-lspconfig' },
     { 'nvim-lua/plenary.nvim' },
@@ -154,7 +166,7 @@ require("lazy").setup(
                 },
                 dap = {
                     adapter = require('rust-tools.dap').get_codelldb_adapter(
-                    codelldb_path, liblldb_path)
+                                    codelldb_path, liblldb_path),
                 },
 
                 hover_actions = {
@@ -213,13 +225,8 @@ require("lazy").setup(
         })
         end
     },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    { 'hrsh7th/cmp-nvim-lua' },
-    { 'hrsh7th/cmp-nvim-lsp-signature-help' },
-    { 'hrsh7th/cmp-vsnip' },
-    { 'hrsh7th/cmp-path' },
-    { 'hrsh7th/cmp-buffer' },
-    { 'hrsh7th/vim-vsnip' },
+    -- Cmp Extras
+    { 'hrsh7th/cmp-nvim-lsp' }, { 'hrsh7th/cmp-nvim-lua' }, { 'hrsh7th/cmp-nvim-lsp-signature-help' }, { 'hrsh7th/cmp-vsnip' }, { 'hrsh7th/cmp-path' }, { 'hrsh7th/cmp-buffer' }, { 'hrsh7th/vim-vsnip' },
     { 'nvim-treesitter/nvim-treesitter', 
         config = function()
             require('nvim-treesitter.configs').setup({
@@ -241,55 +248,15 @@ require("lazy").setup(
             vim.wo.foldlevel = 1
         end
     },
-    { 'mfussenegger/nvim-dap',
-        config = function()
-            vim.keymap.set('n', '<leader>db', '<cmd> lua require("dap").toggle_breakpoint()<CR>')
-            vim.keymap.set('n', '<leader>dc', '<cmd> lua require("dap").continue()<CR>')
-            vim.keymap.set('n', '<leader>dd', '<cmd> lua require("dap").step_over()<CR>')
-            vim.keymap.set('n', '<leader>di', '<cmd> lua require("dap").step_into()<CR>')
-            vim.keymap.set('n', '<leader>dr', '<cmd> lua require("dap").repl.open()<CR>')
-	end	
-    },
+    { 'mfussenegger/nvim-dap' },
     { 'rust-lang/rust.vim' },
     { 'voldikss/vim-floaterm', 
         -- Opens a terminal window in a floating window
         config = function()
             vim.cmd(":FloatermNew --name=myterm --height=0.8 --width=0.7 --autoclose=2 --silent bash <CR>") -- Silently open the terminal 
-            vim.keymap.set('n', "<leader>t", ":FloatermToggle myterm<CR>")
             vim.keymap.set('t', "<Esc>", "<C-\\><C-n>:q<CR>")
         end
     },
-    --[[
-    { 'AckslD/messages.nvim',
-        -- Output results from the command line to a floating window
-        config = function()
-            require('messages').setup(
-            {
-                command_name = "F",
-                buffer_opts = function(lines)
-                    local width = vim.api.nvim_get_option("columns")
-                    local height = vim.api.nvim_get_option("lines")
-                    local win_width = math.ceil(width * 0.8)
-                    local win_height = math.ceil(height * 0.8 - 4)
-                    return {
-                        relative = 'editor',
-                        width = win_width,
-                        height = win_height,
-                       row = math.ceil((height - win_height) / 2 - 1),
-                       col = math.ceil((width - win_width) / 2),
-                        style = 'minimal',
-                        border = 'shadow',
-                        zindex = 1,
-                    }
-                end,
-
-                post_open_float = function(winnr)
-                    vim.cmd("nnoremap <buffer> <Esc> <C-\\><C-n>:q<CR>")
-                end,
-            })
-        end,
-    },
-    ]]
     { 'MunifTanjim/nui.nvim' },
     { 'rcarriga/nvim-notify' },
     { 'folke/noice.nvim',
@@ -305,7 +272,66 @@ require("lazy").setup(
                 },
             })
         end
-    }
+    },
+    { 'folke/which-key.nvim',
+        priority = 0, -- Load last so all modules are available
+        config = function()
+            local wk = require("which-key")
+            local ts_builtin = require("telescope.builtin")
+            local dap = require("dap")
+            local noice = require('noice')
+            wk.register(
+                { 
+                    f = { 
+                        name = "Telescope Find",
+                        f = { ts_builtin.find_files, "Find File" },
+                        F = { function() ts_builtin.find_files({ cwd = "~/." }) end, "Find File in Home" },
+                        s = { ts_builtin.current_buffer_fuzzy_find, "Find in Current Buffer" },
+                        h = { ts_builtin.help_tags, "Find Help" },
+                        b = { ts_builtin.buffers, "Find Buffer" },
+                        o = { ts_builtin.vim_options, "Find Vim Option" },
+                        m = { ts_builtin.man_pages, "Find Man Page" },
+                        i = { ts_builtin.lsp_implementations, "Find Implementations" },
+                        d = { ts_builtin.lsp_definitions, "Find Definitions" },
+                        r = { ts_builtin.lsp_references, "Find References" },
+                    },
+                    d = {
+                        name = "Debug",
+                        b = { dap.toggle_breakpoint, "Toggle Breakpoint" },
+                        c = { dap.continue, "Continue" },
+                        d = { dap.step_over, "Step Over" },
+                        i = { dap.step_into, "Step Into" },
+                        r = { dap.repl.open, "Open Repl" },
+                    },
+                    t = {
+                        name = "Terminal",
+                        t = { "<cmd>FloatermToggle myterm<CR>", "Open Terminal" },
+                        n = { "<cmd>FloatermNew --height=0.8 --width=0.7 --autoclose=2 --disposable bash<CR>", "Open Scratch Terminal" },
+                        b = { function()
+                                  vim.cmd(string.format(":FloatermNew --height=0.8 --width=0.7 --autoclose=0 --disposable lynx -vikeys %s", vim.fn.getreg('"')))
+                              end, 
+                              "Open Register Content In Elinks" },
+                    },
+                    g = {
+                        name = "Git",
+                        s = { ts_builtin.git_status, "Git Status" }
+                    },
+                    r = {
+                        -- TODO: Make this adapt to the currently loaded file type  
+                        name = "Run",
+                        -- TODO: Change this to open a new terminal that runs cargo run
+                        r = { "<CMD>FloatermNew --height=0.8 --width=0.7 --autoclose=0 --disposable cargo run<CR>", "Run" },
+                    },
+                    n = {
+                        name = "Messages",
+                        l = { function() noice.cmd("last") end, "Last Message" },
+                        h = { function() noice.cmd("history") end, "History" },
+                    },
+                },
+                { prefix = "<leader>" }
+            )
+	    end
+    },
 }
 )
 
